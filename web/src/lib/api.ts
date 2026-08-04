@@ -3,7 +3,7 @@ import type {Disposition, FindingView, RoundCounts} from '../../../src/types.ts'
 /**
  * The API client.
  *
- * Types are imported straight from `src/types.ts` — the same file the server
+ * Types are imported straight from `src/types.ts`, the same file the server
  * uses. They are erased at build time, so this costs nothing at runtime and
  * means the wire shape cannot drift between the two halves.
  */

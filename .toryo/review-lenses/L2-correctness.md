@@ -1,4 +1,4 @@
-# Lens L2 — Correctness and safety
+# Lens L2: correctness and safety
 
 Review the diff through this lens only. This is the lens that earns the review:
 a missed T1 here costs more than every style finding combined.
@@ -21,20 +21,20 @@ a missed T1 here costs more than every style finding combined.
 - **Resource lifetime.** A handle, subprocess, or listener created and never
   released on the error path.
 - **Type escapes.** A cast or `any` that turns a real type error into a runtime
-  one. Trace what actually flows through it before calling it out — sometimes
+  one. Trace what actually flows through it before calling it out; sometimes
   the cast is the honest boundary.
 - **Data loss.** A write that overwrites a column another writer owns; a
   migration that drops or retypes a populated column.
 
 ## Out of scope
 
-- Where the code lives — L1.
-- Readability — L3.
+- Where the code lives. That is L1.
+- Readability. That is L3.
 
 ## The bar
 
 A T1 needs a failure you can describe: the input, the state, and what goes
-wrong. If you cannot write that sentence, it is not a T1 — drop it or file it at
+wrong. If you cannot write that sentence, it is not a T1: drop it or file it at
 the tier you can actually justify.
 
 Trace before you claim. "This could race" about code holding a lock, or "this

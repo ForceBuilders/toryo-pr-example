@@ -8,7 +8,7 @@ type Body = {ref?: string; repo?: string; pr?: number; focus?: string; project?:
  * Kick off a review.
  *
  * All this does is shell out to `toryo sequence run`. The app owns no queue, no
- * worker pool, and no model credentials — that is the entire argument for
+ * worker pool, and no model credentials. That is the entire argument for
  * building on toryo rather than beside it.
  */
 export const startReviewRoute: Route = {

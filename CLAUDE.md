@@ -1,7 +1,7 @@
 # toryo-pr-example
 
 A GitHub PR reviewer built on [toryo](https://github.com/ForceBuilders/toryo),
-written as a **teaching example**. Read [`README.md`](./README.md) first — it
+written as a **teaching example**. Read [`README.md`](./README.md) first: it
 explains what this demonstrates and why each piece is shaped the way it is.
 
 Optimise for legibility over cleverness here. Someone reading this repo is
@@ -21,7 +21,7 @@ demo: a repo states its conventions, and the reviewer honours them.
 Two surfaces over one implementation. Everything lives in `src/`; the CLI
 (`src/cli/`) and the HTTP API (`src/routes/`) both call it and neither owns any
 logic. Commands and routes are standalone data objects registered by iterating
-an array — never a `switch`.
+an array, never a `switch`.
 
 The two integration boundaries are one file each, deliberately:
 `src/toryo.ts` and `src/gh.ts`. Nothing else in the app shells out.

@@ -6,7 +6,7 @@ import {int, list, str} from '../args.ts';
 /**
  * Post to GitHub from the terminal.
  *
- * With no `--finding-id`, this posts everything still `pending` — the "I read
+ * With no `--finding-id`, this posts everything still `pending`: the "I read
  * it in the UI and I agree with all of it" path.
  */
 export const postCommand: Command = {

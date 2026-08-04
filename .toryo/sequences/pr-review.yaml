@@ -60,11 +60,11 @@ steps:
       Before reading the diff, check whether the checkout carries its own
       reviewer configuration, and honour it if so:
 
-      - `.toryo/review-lenses/*.md` — the lenses to review through. If present,
+      - `.toryo/review-lenses/*.md`: the lenses to review through. If present,
         they replace the default rubric below.
-      - `.claude/rules/*.md` — the repo's own coding conventions. A finding that
+      - `.claude/rules/*.md`: the repo's own coding conventions. A finding that
         contradicts a stated rule is wrong; a violation of one is a real finding.
-      - `docs/personas/reviewer.md` — the voice and priorities to adopt.
+      - `docs/personas/reviewer.md`: the voice and priorities to adopt.
 
       None of these are required. Absent, use the rubric below.
       {{run.focus}}
@@ -73,13 +73,13 @@ steps:
 
       Tier every finding:
 
-      - T1 — a defect that will bite in production: wrong behaviour, data loss,
+      - T1: a defect that will bite in production: wrong behaviour, data loss,
         a security hole, a race. Something you can describe failing.
-      - T2 — should be fixed before merge: a missing edge case, an error path
+      - T2: should be fixed before merge: a missing edge case, an error path
         that swallows the cause, absent tests for the logic being added.
-      - T3 — worth considering: a design or clarity issue a reasonable author
+      - T3: worth considering: a design or clarity issue a reasonable author
         might decline.
-      - T4 — a nit. Be sparing; a wall of nits buries the T1.
+      - T4: a nit. Be sparing; a wall of nits buries the T1.
 
       Every finding MUST quote the code it is about, verbatim, in `evidence`.
       That is not decoration. It is how a reader confirms the finding is real
@@ -119,7 +119,7 @@ steps:
 
       The verdict follows the worst surviving finding: any T1 or T2 is
       `request_changes`, a T3 is `comment`, nothing above T4 is `approve`. It is
-      a stored signal for the operator, never submitted to GitHub — a human
+      a stored signal for the operator, never submitted to GitHub. A human
       decides whether to approve a pull request.
 
       Build the file with a script rather than by hand: summaries and bodies

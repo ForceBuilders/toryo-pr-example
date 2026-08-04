@@ -6,7 +6,7 @@ import {str} from '../args.ts';
  * Pull a finished sequence run's artifact into the store.
  *
  * The server does this automatically while it is watching a run. This command
- * is the answer to "the server was not running when the review finished" — the
+ * is the answer to "the server was not running when the review finished": the
  * artifact is still on disk, so nothing is lost.
  */
 export const ingestCommand: Command = {

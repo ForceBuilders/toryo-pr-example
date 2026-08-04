@@ -17,8 +17,8 @@ manager, or a triage tool. Those are *workflows*, and workflows belong to the
 teams that need them.
 
 This repo is one such workflow. Everything domain-specific about reviewing pull
-requests — the rubric, the tiers, the finding store, the triage UI, the GitHub
-posting — lives here. toryo contributes the parts that are not domain-specific:
+requests (the rubric, the tiers, the finding store, the triage UI, the GitHub
+posting) lives here. toryo contributes the parts that are not domain-specific:
 running the agent, tracking the run, and putting an artifact on disk.
 
 ## The three seams
@@ -54,7 +54,7 @@ This app never spawns Claude. It has no queue, no worker pool, and no model
 credentials. It runs `toryo sequence run`, polls `toryo sequence status`, and
 reads the artifact.
 
-All of that is [`src/toryo.ts`](src/toryo.ts) — about sixty lines of
+All of that is [`src/toryo.ts`](src/toryo.ts): about sixty lines of
 spawn-and-parse. Two conventions do the work, both frozen in toryo's
 `docs/contract.md`: a read command emits exactly one JSON document on stdout
 (parse the **last** non-empty line, since log lines may precede it), and exit
@@ -149,7 +149,7 @@ so the worker just looks around:
 None are required. Absent, the rubric in the sequence applies.
 
 This is the part worth copying even if you never use the rest. A team tunes how
-their code gets reviewed by committing files to their own repo — no fork, no
+their code gets reviewed by committing files to their own repo. No fork, no
 config service, no pull request against the reviewer.
 
 This repo carries its own set, so you can point the reviewer at this repo and
@@ -166,8 +166,8 @@ runs.
 
 The obvious key is `file:line`, and it does not work: lines move whenever
 anything above them changes, tiers get re-judged, files get renamed. So hash
-what is *durable* — the file's **basename**, the **evidence** (the actual quoted
-code) and the **title**, all normalised — and deliberately exclude line, tier,
+what is *durable*: the file's **basename**, the **evidence** (the actual quoted
+code) and the **title**, all normalised. Deliberately exclude line, tier,
 and body prose.
 
 That one decision is what makes [`src/record.ts`](src/record.ts) able to report
@@ -202,7 +202,7 @@ the code.
 code will occasionally produce a fluent, specific, entirely fictional finding.
 The fix is mechanical, not prompt engineering: check each finding's cited file
 exists, that the line is within it, and that the `evidence` quote actually
-appears in the tree — then drop what fails. This example keeps `evidence`
+appears in the tree, then drop what fails. This example keeps `evidence`
 required so the check *can* be added, and asks the worker to self-verify, but a
 model checking itself is not a check. If you build one of these for real, this
 is the first thing to add. toryo's own retired implementation is the reference.

@@ -50,7 +50,7 @@ export const findingInputSchema = z.object({
 export type FindingInput = z.infer<typeof findingInputSchema>;
 
 /**
- * `findings.json` — the artifact the sequence's `review` step writes, and the
+ * `findings.json`: the artifact the sequence's `review` step writes, and the
  * only thing that crosses from toryo back into this app.
  *
  * It is deliberately **self-describing**: it names its own repo and PR rather
@@ -86,7 +86,7 @@ export type FindingView = {
   line: number | null;
   tier: Tier;
   title: string;
-  /** `bodyOverrideMd ?? bodyMd` — what gets posted. */
+  /** `bodyOverrideMd ?? bodyMd`: what gets posted. */
   body: string;
   /** True when an operator edited the body. */
   edited: boolean;

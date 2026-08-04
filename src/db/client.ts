@@ -11,7 +11,7 @@ export type Db = BunSQLiteDatabase<typeof schema>;
 /**
  * One SQLite file, outside the repo so a clone is never a database.
  *
- * `PR_EXAMPLE_DB` overrides it, which is what the tests use — every one of them
+ * `PR_EXAMPLE_DB` overrides it, which is what the tests use. Every one of them
  * runs against `:memory:` rather than a shared file, so a test run can never
  * touch the operator's real reviews.
  */

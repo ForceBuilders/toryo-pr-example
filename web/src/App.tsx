@@ -8,7 +8,7 @@ import {TargetDetail} from './views/TargetDetail.tsx';
 
 /**
  * One screen: start a review at the top, reviewed PRs down the left, the
- * selected one on the right. No router — at this size a piece of state is
+ * selected one on the right. No router: at this size a piece of state is
  * clearer than a URL scheme, and the whole app is one page anyway.
  */
 export function App() {

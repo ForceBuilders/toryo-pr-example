@@ -4,7 +4,7 @@ import {Markdown} from './Markdown.tsx';
 import {ResolutionTag, TierBadge} from './Badges.tsx';
 
 /**
- * The markdown editor is by far the heaviest thing here — roughly two thirds of
+ * The markdown editor is by far the heaviest thing here: roughly two thirds of
  * the bundle, and it pulls its own stylesheet. Most sessions never click Edit,
  * so it loads on first use rather than on first paint.
  */
@@ -74,7 +74,7 @@ export const FindingRow = memo(function FindingRow(props: FindingRowProps) {
       <div className="mt-1 font-mono text-xs text-neutral-500">
         {finding.file}
         {finding.line === null ? '' : `:${finding.line}`}
-        {finding.line === null && <span className="ml-2 text-neutral-600">(no line — posts in the review body)</span>}
+        {finding.line === null && <span className="ml-2 text-neutral-600">(no line, posts in the review body)</span>}
       </div>
 
       {editing ? (

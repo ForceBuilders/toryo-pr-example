@@ -55,7 +55,7 @@ function printUsage(): void {
 
 function printCommandUsage(command: Command): void {
   const flags = command.flags.length > 0 ? `\n\nFlags:\n${usage(command.flags)}` : '';
-  process.stdout.write(`pr-example ${command.name} — ${command.describe}${flags}\n`);
+  process.stdout.write(`pr-example ${command.name}: ${command.describe}${flags}\n`);
 }
 
 process.exit(await main(process.argv.slice(2)));

@@ -16,7 +16,7 @@ will be expensive to live with.
 
 ## How they talk
 
-- **Direct.** "This drops the error" — not "it might be worth considering
+- **Direct.** "This drops the error", not "it might be worth considering
   whether the error handling here could potentially be improved."
 - **Specific.** Every finding names a file, a line, and the change that would
   resolve it. A finding the author cannot act on is not finished.

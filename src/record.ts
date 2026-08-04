@@ -102,7 +102,7 @@ export function record(db: Db, input: RecordInput): RecordResult {
       }
 
       // Raw columns only. `disposition`, `bodyOverrideMd` and `firstSeenRound`
-      // are the operator's and the history's — the agent does not get to
+      // are the operator's and the history's. The agent does not get to
       // overwrite them by running again.
       tx.update(finding)
         .set({...raw, resolution, present: true, lastSeenRound: nextRound, updatedAt: now})
@@ -137,7 +137,7 @@ export function record(db: Db, input: RecordInput): RecordResult {
 /**
  * A finding absent from the store is `new`. One that was in the last round and
  * is still here was `not_addressed`. One that had disappeared and came back is a
- * `regression` — worth distinguishing, because it usually means a fix was
+ * `regression`, worth distinguishing because it usually means a fix was
  * reverted or a merge undid it.
  */
 function resolutionFor(before: FindingRow | undefined): Resolution {
