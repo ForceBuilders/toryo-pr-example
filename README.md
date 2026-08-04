@@ -127,6 +127,13 @@ Paste `owner/name#123` into the box and press Review.
 > If a run fails with `unknown step kind 'setup'`, the installed toryo predates
 > them: rebuild its binaries and restart the sequence daemon.
 
+> **Open pull requests only.** The `gh-pr-checkout` primitive runs
+> `gh pr checkout`, which fetches the head branch by name. Most repositories
+> delete that branch on merge, so a merged PR fails to check out with
+> `couldn't find remote ref refs/heads/<branch>`. GitHub still keeps the head
+> commit reachable at `refs/pull/<n>/head`, so a fallback is possible and would
+> be a good first contribution to the primitive upstream.
+
 To make the sequence available from *any* repository rather than just this one,
 copy it into the global home:
 
