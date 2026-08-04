@@ -24,7 +24,12 @@ entry: prepare
 input:
   repo: string
   pr: number
-  focus?: string
+  # A DEFAULT, not `focus?: string`. An optional field is absent when the caller
+  # omits it, and `{{run.focus}}` on an absent field is a render error that fails
+  # the run. `sequence validate` does not catch it: the field IS declared, so the
+  # token resolves statically and only blows up at dispatch. A default makes the
+  # field always present, and an empty string renders to nothing.
+  focus: {type: string, default: ''}
 
 steps:
   # A vetted primitive, not a shell command. `into:` is confined under the run

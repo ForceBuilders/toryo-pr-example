@@ -127,6 +127,16 @@ Paste `owner/name#123` into the box and press Review.
 > If a run fails with `unknown step kind 'setup'`, the installed toryo predates
 > them: rebuild its binaries and restart the sequence daemon.
 
+> **Deleted head branches.** The `gh-pr-checkout` primitive runs
+> `gh pr checkout`. For a pull request opened from a branch in the **same**
+> repository, that fetches the head branch by name, so a branch deleted after
+> merge fails with `couldn't find remote ref refs/heads/<branch>`. Whether that
+> happens is the repository's `deleteBranchOnMerge` setting, which GitHub leaves
+> off by default. Fork pull requests are unaffected: `gh` fetches those from
+> `refs/pull/<n>/head`, which GitHub keeps regardless. Teaching the primitive to
+> use `refs/pull/<n>/head` for the same-repo case too would be a good first
+> contribution upstream.
+
 To make the sequence available from *any* repository rather than just this one,
 copy it into the global home:
 
