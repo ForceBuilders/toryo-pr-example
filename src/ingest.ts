@@ -19,7 +19,7 @@ export type IngestOutcome =
  * this app exists, has no credentials for it, and does not care whether it is
  * running. Everything the app needs is on disk in the run directory afterwards.
  *
- * The alternative — a final worker step that calls back into the app's CLI —
+ * The alternative (a final worker step that calls back into the app's CLI)
  * costs an extra agent session, couples the sequence to this app, and fails
  * silently when the app is not installed. A file is a better contract.
  *

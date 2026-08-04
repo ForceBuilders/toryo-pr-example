@@ -8,7 +8,7 @@ import {join} from 'node:path';
  * cannot import its typed clients. That is by design, not an oversight: toryo's
  * architecture says the CLI *is* the contract, and outside programs talk to it
  * over the process boundary. Which means the integration is about sixty lines
- * of spawn-and-parse — this file — and nothing else in this app knows toryo
+ * of spawn-and-parse (this file), and nothing else in this app knows toryo
  * exists.
  *
  * Two conventions do all the work, both frozen in toryo's `docs/contract.md`:

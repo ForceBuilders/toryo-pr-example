@@ -29,7 +29,7 @@ export const target = sqliteTable(
     /**
      * The toryo project this PR belongs to, when there is one. A loose
      * reference: toryo owns the project registry in its own database, and this
-     * app never joins across that boundary — it shells the CLI instead.
+     * app never joins across that boundary; it shells the CLI instead.
      */
     projectId: text('project_id'),
     title: text('title'),
@@ -75,7 +75,7 @@ export const finding = sqliteTable(
     targetId: text('target_id')
       .notNull()
       .references(() => target.id, {onDelete: 'cascade'}),
-    /** The stable content hash. Unique per target — this is the chaining key. */
+    /** The stable content hash. Unique per target: this is the chaining key. */
     findingId: text('finding_id').notNull(),
 
     // Raw agent output. Rewritten on every round.

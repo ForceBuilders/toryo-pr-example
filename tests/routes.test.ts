@@ -8,7 +8,7 @@ import {artifact, finding, testDb} from './helpers/db.ts';
 
 /**
  * The read and edit surface, called directly rather than over a socket. The
- * routes that reach GitHub or toryo are covered by their own units — spinning
+ * routes that reach GitHub or toryo are covered by their own units; spinning
  * up a server here would only test Bun's router.
  */
 

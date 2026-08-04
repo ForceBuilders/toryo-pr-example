@@ -18,7 +18,7 @@ export const EXIT = {
 
 /**
  * One command as a standalone data object. The registry is an array of these,
- * so adding a command is adding a file and one import — never editing a
+ * so adding a command is adding a file and one import, never editing a
  * `switch` that grows a case per verb.
  */
 export type Command = {

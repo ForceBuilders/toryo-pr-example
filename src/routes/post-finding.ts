@@ -2,7 +2,7 @@ import {getFindingById} from '../queries.ts';
 import {postFindings} from '../triage.ts';
 import {fail, json, type Route} from './route.ts';
 
-/** Post a single finding to GitHub — the per-row "post" button in the UI. */
+/** Post a single finding to GitHub: the per-row "post" button in the UI. */
 export const postFindingRoute: Route = {
   method: 'POST',
   path: '/api/findings/:id/post',

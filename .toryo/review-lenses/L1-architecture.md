@@ -1,4 +1,4 @@
-# Lens L1 — Architecture and boundaries
+# Lens L1: architecture and boundaries
 
 Review the diff through this lens only. Correctness bugs belong to L2, style to
 L3; if you notice one, leave it for that lens rather than half-covering it here.
@@ -15,7 +15,7 @@ L3; if you notice one, leave it for that lens rather than half-covering it here.
   that were independent is worth a finding even when each side is fine, because
   it is the edge that will be expensive later.
 - **Duplication of an existing capability.** A new helper that reimplements
-  something already exported nearby. Search before asserting this — a
+  something already exported nearby. Search before asserting this. A
   near-duplicate that handles a different case is not duplication.
 - **Abstractions with one caller.** An interface, factory, or strategy
   introduced for a single implementation and no stated second one. Speculative
@@ -29,8 +29,8 @@ L3; if you notice one, leave it for that lens rather than half-covering it here.
 
 ## Out of scope
 
-- Whether the logic is *right* — L2.
-- Naming, formatting, comment density — L3.
+- Whether the logic is *right*. That is L2.
+- Naming, formatting, comment density. That is L3.
 
 ## What a good L1 finding looks like
 

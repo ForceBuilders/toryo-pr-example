@@ -105,7 +105,7 @@ async function ghApiJson(path: string, payload: unknown): Promise<GhResult<unkno
   }
 }
 
-/** `https://github.com/<repo>/pull/<n>` — the link every row in the UI wants. */
+/** `https://github.com/<repo>/pull/<n>`: the link every row in the UI wants. */
 export function prUrl(repo: string, pr: number): string {
   return `https://github.com/${repo}/pull/${pr}`;
 }

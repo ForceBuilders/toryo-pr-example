@@ -1,4 +1,4 @@
-# Lens L3 — Clarity and convention
+# Lens L3: clarity and convention
 
 Review the diff through this lens only, and review it *last*. This is the lens
 most likely to produce noise, so hold it to a higher bar than the other two.
@@ -13,7 +13,7 @@ most likely to produce noise, so hold it to a higher bar than the other two.
   behaviour after a change.
 - **Comments.** Missing where the code says *what* but not *why* a surprising
   choice was made. Present but stale, describing behaviour the diff just
-  changed — a wrong comment is worse than none.
+  changed. A wrong comment is worse than none.
 - **Dead code.** Unused imports, exports nothing references, commented-out
   blocks, a parameter every caller passes the same value for.
 - **Debug residue.** Stray logging, a hardcoded test value, a `TODO` with no

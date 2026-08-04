@@ -32,7 +32,7 @@ advice.
 
 ## Keep them about *this* repo
 
-A lens that repeats general programming advice adds tokens and no signal — the
+A lens that repeats general programming advice adds tokens and no signal: the
 model already knows what a race condition is. A lens earns its place by saying
 what is true **here**: which directories are load-bearing, which mistake this
 team keeps making, which pattern was chosen deliberately and should stop being

@@ -4,7 +4,7 @@ description: Review a GitHub pull request by dispatching the pr-review sequence 
 argument-hint: <owner/name#123 | PR url>
 ---
 
-# /pr — review a pull request
+# /pr: review a pull request
 
 Dispatches this repo's `pr-review` sequence through toryo, then reports the run
 id. The review itself happens in a toryo worker session, not in this
@@ -27,7 +27,7 @@ dispatched run is tracked, resumable, costed, and lands in a database.
    toryo project resolve "$PWD"
    ```
 
-   Exit 67 means unregistered — tell the operator to run
+   Exit 67 means unregistered. Tell the operator to run
    `toryo project add --name "toryo PR example" --root "$PWD"` and stop. Take
    the `slug` from the JSON.
 
@@ -62,9 +62,9 @@ and sitting in a wait loop is the one thing dispatch exists to avoid.
 
 `toryo sequence status <runId>` carries the error. The two common ones:
 
-- **`unknown step kind 'setup'`** — the installed toryo predates declarative
+- **`unknown step kind 'setup'`**: the installed toryo predates declarative
   setup steps. Rebuild its binaries and restart the sequence daemon.
-- **the `review` step failed its success check** — the worker did not write
+- **the `review` step failed its success check**: the worker did not write
   `findings.json`. The run directory
   (`~/.toryo/sequence/<projectId>/<runId>/`) has the session log.
 
