@@ -1,0 +1,64 @@
+@import 'tailwindcss';
+
+/*
+ * Dark by default. The markdown editor ships light-only styles at a specificity
+ * that ordinary utilities lose to, so these few overrides are the price of not
+ * writing an editor.
+ */
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-neutral-950 text-neutral-100 antialiased;
+}
+
+.w-md-editor {
+  @apply !bg-neutral-900 !text-neutral-100;
+}
+
+.w-md-editor-text-input,
+.w-md-editor-text-pre > code,
+.w-md-editor-text-pre {
+  @apply !text-neutral-100;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+}
+
+.w-md-editor-toolbar {
+  @apply !bg-neutral-800 !border-neutral-700;
+}
+
+.w-md-editor-toolbar li > button {
+  @apply !text-neutral-300;
+}
+
+/* Long file paths and code blocks scroll inside their own box rather than
+   pushing the layout sideways. */
+.prose-review pre {
+  @apply overflow-x-auto rounded bg-neutral-900 p-3 text-xs;
+}
+
+.prose-review code {
+  @apply rounded bg-neutral-800 px-1 py-0.5 text-[0.85em];
+}
+
+.prose-review pre code {
+  @apply bg-transparent p-0;
+}
+
+.prose-review p {
+  @apply my-2 leading-relaxed;
+}
+
+.prose-review ul {
+  @apply my-2 list-disc pl-5;
+}
+
+.prose-review ol {
+  @apply my-2 list-decimal pl-5;
+}
+
+.prose-review a {
+  @apply text-sky-400 underline;
+}

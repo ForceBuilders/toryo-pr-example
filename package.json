@@ -1,0 +1,41 @@
+{
+  "name": "toryo-pr-example",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A worked example of building a domain workflow on top of toryo: a GitHub PR reviewer with its own sequence, store, and UI.",
+  "scripts": {
+    "dev": "bun scripts/dev.ts",
+    "dev:server": "bun --hot src/server.ts",
+    "dev:web": "vite",
+    "build": "tsc --noEmit && vite build",
+    "start": "bun src/server.ts",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "bun src/cli.ts migrate",
+    "sequence:validate": "toryo sequence validate .toryo/sequences/pr-review.yaml",
+    "cli": "bun src/cli.ts"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5",
+    "@uiw/react-md-editor": "^4",
+    "drizzle-orm": "^0.36",
+    "react": "^19",
+    "react-dom": "^19",
+    "react-markdown": "^10",
+    "remark-gfm": "^4",
+    "zod": "^3"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4",
+    "@types/bun": "latest",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4",
+    "drizzle-kit": "^0.28",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vite": "^6"
+  }
+}

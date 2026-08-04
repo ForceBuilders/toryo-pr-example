@@ -1,0 +1,154 @@
+# A custom toryo sequence, living in this repo rather than inside toryo.
+#
+# Drop this file in `<your-repo>/.toryo/sequences/` and `toryo sequence run
+# pr-review --project <your-repo>` finds it. No fork of toryo, no TypeScript
+# compiled into it, no PR against someone else's codebase. That is the whole
+# extensibility story.
+#
+# Three steps, one of each kind that does not need a human:
+#
+#   prepare (setup)     get a checkout of the PR head
+#   review  (worker)    a Claude session reads it and writes findings.json
+#   load    (transform) parse the artifact back into the run's state
+#
+# Validate it with `toryo sequence validate .toryo/sequences/pr-review.yaml`
+# before dispatching. It catches unknown steps, bad routing, disallowed payload
+# fields, and template tokens that cannot resolve.
+
+name: pr-review
+version: 1
+description: Review a GitHub pull request and write findings.json for the pr-example app.
+
+entry: prepare
+
+input:
+  repo: string
+  pr: number
+  focus?: string
+
+steps:
+  # A vetted primitive, not a shell command. `into:` is confined under the run
+  # dir and checked when the sequence compiles, so this can only ever clone into
+  # toryo's own scratch space. The engine adopts `output.workingDir`, which is
+  # what roots the next step in the checkout.
+  prepare:
+    kind: setup
+    use: gh-pr-checkout
+    repo: '{{run.repo}}'
+    pr: '{{run.pr}}'
+    into: checkout
+    on: {default: review}
+
+  review:
+    kind: worker
+    prompt: |
+      Review pull request #{{run.pr}} in {{run.repo}}.
+
+      You are in a checkout of the PR head at {{steps.prepare.output.workingDir}}.
+      Branch {{steps.prepare.output.headRef}} onto {{steps.prepare.output.baseRef}},
+      head {{steps.prepare.output.headSha}}.
+
+      ## What changed
+
+      Run `git diff {{steps.prepare.output.baseRef}}...HEAD` for the diff. You
+      have the whole tree, so read the surrounding code before judging anything.
+      Review the change, not the codebase: pre-existing problems the diff does
+      not touch are out of scope.
+
+      ## How this repo wants to be reviewed
+
+      Before reading the diff, check whether the checkout carries its own
+      reviewer configuration, and honour it if so:
+
+      - `.toryo/review-lenses/*.md` — the lenses to review through. If present,
+        they replace the default rubric below.
+      - `.claude/rules/*.md` — the repo's own coding conventions. A finding that
+        contradicts a stated rule is wrong; a violation of one is a real finding.
+      - `docs/personas/reviewer.md` — the voice and priorities to adopt.
+
+      None of these are required. Absent, use the rubric below.
+      {{run.focus}}
+
+      ## Default rubric
+
+      Tier every finding:
+
+      - T1 — a defect that will bite in production: wrong behaviour, data loss,
+        a security hole, a race. Something you can describe failing.
+      - T2 — should be fixed before merge: a missing edge case, an error path
+        that swallows the cause, absent tests for the logic being added.
+      - T3 — worth considering: a design or clarity issue a reasonable author
+        might decline.
+      - T4 — a nit. Be sparing; a wall of nits buries the T1.
+
+      Every finding MUST quote the code it is about, verbatim, in `evidence`.
+      That is not decoration. It is how a reader confirms the finding is real
+      rather than plausible-sounding, and a finding you cannot evidence is one
+      you should not write. Cite `file` as a repo-relative path and `line` as
+      the line in the file at HEAD, or null when it genuinely has no single
+      location.
+
+      Prefer few real findings to many weak ones. An empty findings list with a
+      clear summary is a good review of a good PR.
+
+      ## Output
+
+      Write JSON to {{runDir}}/findings.json, exactly this shape:
+
+      {
+        "repo": "{{run.repo}}",
+        "pr": {{run.pr}},
+        "headSha": "{{steps.prepare.output.headSha}}",
+        "title": "{{steps.prepare.output.title}}",
+        "author": "{{steps.prepare.output.author}}",
+        "baseRef": "{{steps.prepare.output.baseRef}}",
+        "headRef": "{{steps.prepare.output.headRef}}",
+        "verdict": "approve" | "comment" | "request_changes",
+        "summary": "markdown: what this PR does, and your overall take",
+        "findings": [
+          {
+            "file": "src/thing.ts",
+            "line": 42,
+            "tier": "T2",
+            "title": "one line, specific",
+            "body": "markdown: what is wrong and what to do about it",
+            "evidence": "the verbatim lines this is about"
+          }
+        ]
+      }
+
+      The verdict follows the worst surviving finding: any T1 or T2 is
+      `request_changes`, a T3 is `comment`, nothing above T4 is `approve`. It is
+      a stored signal for the operator, never submitted to GitHub — a human
+      decides whether to approve a pull request.
+
+      Build the file with a script rather than by hand: summaries and bodies
+      contain quotes and newlines, and hand-assembled JSON breaks on the first
+      one.
+    payload:
+      llm: {model: default}
+      agent: {orientation: reviewer}
+      # Nothing in the target repo is modified; the only write is the artifact,
+      # which lands in the run dir.
+      writeScope: []
+      successCheck:
+        kind: fileExists
+        paths: ['{{runDir}}/findings.json']
+    on:
+      success: load
+      error: null
+
+  # Parse the artifact into run state, so `toryo sequence status` shows the
+  # verdict without anyone opening a file.
+  load:
+    kind: transform
+    use: read-json
+    file: findings.json
+    output:
+      repo: string
+      pr: number
+      headSha: string
+      verdict: {type: string, enum: [approve, comment, request_changes]}
+      summary: string
+      findings: {type: array, items: object}
+    on: {default: null}
