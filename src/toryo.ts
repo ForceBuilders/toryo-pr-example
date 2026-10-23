@@ -7,9 +7,8 @@ import {join} from 'node:path';
  * toryo's `@toryo/*` packages are private and unpublished, so an external repo
  * cannot import its typed clients. That is by design, not an oversight: toryo's
  * architecture says the CLI *is* the contract, and outside programs talk to it
- * over the process boundary. Which means the integration is about sixty lines
- * of spawn-and-parse (this file), and nothing else in this app knows toryo
- * exists.
+ * over the process boundary. Which means the integration is one file of
+ * spawn-and-parse (this one), and nothing else in this app knows toryo exists.
  *
  * Two conventions do all the work, both frozen in toryo's `docs/contract.md`:
  *
@@ -61,7 +60,8 @@ export async function startReview(args: {
   const file = join(homedir(), '.toryo-pr-example', `input-${crypto.randomUUID()}.json`);
   await Bun.write(file, JSON.stringify(input));
   try {
-    const r = await toryoJson<{runId?: string; id?: string}>([
+    // `sequence run` prints the new run row, whose id is `id` (contract §5, `SequenceRun`).
+    const r = await toryoJson<{id: string}>([
       'sequence',
       'run',
       'pr-review',
@@ -71,7 +71,7 @@ export async function startReview(args: {
       args.project,
     ]);
     if (!r.ok) return r;
-    const runId = r.value.runId ?? r.value.id;
+    const runId = r.value.id;
     if (!runId) return {ok: false, code: 1, message: 'sequence run returned no run id'};
     return {ok: true, value: {runId}};
   } finally {

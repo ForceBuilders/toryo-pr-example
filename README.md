@@ -32,7 +32,7 @@ complete toryo sequence. It is not compiled into toryo, not registered with it,
 and not a fork of it. Drop a YAML file in `<your-repo>/.toryo/sequences/` and
 `toryo sequence run <name> --project <your-repo>` finds it.
 
-Three steps, one of each kind that does not need a human:
+Three steps, each of a different kind, none of which needs a human:
 
 - **`prepare`** (`kind: setup`) checks the pull request out, using the vetted
   `gh-pr-checkout` primitive. The clone is confined to toryo's run directory.
@@ -54,8 +54,8 @@ This app never spawns Claude. It has no queue, no worker pool, and no model
 credentials. It runs `toryo sequence run`, polls `toryo sequence status`, and
 reads the artifact.
 
-All of that is [`src/toryo.ts`](src/toryo.ts): about sixty lines of
-spawn-and-parse. Two conventions do the work, both frozen in toryo's
+All of that is [`src/toryo.ts`](src/toryo.ts): one file of spawn-and-parse.
+Two conventions do the work, both frozen in toryo's
 `docs/contract.md`: a read command emits exactly one JSON document on stdout
 (parse the **last** non-empty line, since log lines may precede it), and exit
 codes are stable (`0` ok, `64` bad args, `65` db, `67` not found).
@@ -124,18 +124,9 @@ bun run dev                                              # http://localhost:5173
 Paste `owner/name#123` into the box and press Review.
 
 > **Requires toryo with declarative `setup` steps** (`CONTRACT_VERSION` ≥ 2.4.1).
-> If a run fails with `unknown step kind 'setup'`, the installed toryo predates
-> them: rebuild its binaries and restart the sequence daemon.
-
-> **Deleted head branches.** The `gh-pr-checkout` primitive runs
-> `gh pr checkout`. For a pull request opened from a branch in the **same**
-> repository, that fetches the head branch by name, so a branch deleted after
-> merge fails with `couldn't find remote ref refs/heads/<branch>`. Whether that
-> happens is the repository's `deleteBranchOnMerge` setting, which GitHub leaves
-> off by default. Fork pull requests are unaffected: `gh` fetches those from
-> `refs/pull/<n>/head`, which GitHub keeps regardless. Teaching the primitive to
-> use `refs/pull/<n>/head` for the same-repo case too would be a good first
-> contribution upstream.
+> Last verified against toryo 1.4.0 (contract 4.8.0). If a run fails with
+> `unknown step kind 'setup'`, the installed toryo predates them: update it with
+> `toryo update`.
 
 To make the sequence available from *any* repository rather than just this one,
 copy it into the global home:

@@ -41,7 +41,7 @@ touch the real store.
 
 - **The sequence needs toryo ≥ `CONTRACT_VERSION` 2.4.1** for declarative
   `kind: setup` steps. `unknown step kind 'setup'` means the installed toryo
-  is older than the feature.
+  is older than the feature: run `toryo update`.
 - **`findings.json` is model output**, so it is the least trustworthy input in
   the system. It is validated by `roundArtifactSchema` before anything believes
   it, and it should stay that way.
