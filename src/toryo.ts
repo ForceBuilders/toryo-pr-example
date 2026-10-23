@@ -60,7 +60,7 @@ export async function startReview(args: {
   const file = join(homedir(), '.toryo-pr-example', `input-${crypto.randomUUID()}.json`);
   await Bun.write(file, JSON.stringify(input));
   try {
-    // `sequence run` prints the new run row, whose id is `id` (contract §5, `SequenceRun`).
+    // `sequence run` prints the new run row, whose id is `id` (contract §2; `SequenceRun` in @toryo/sequence-client).
     const r = await toryoJson<{id: string}>([
       'sequence',
       'run',
