@@ -5,7 +5,7 @@
 # compiled into it, no PR against someone else's codebase. That is the whole
 # extensibility story.
 #
-# Three steps, one of each kind that does not need a human:
+# Three steps, each of a different kind, none of which needs a human:
 #
 #   prepare (setup)     get a checkout of the PR head
 #   review  (worker)    a Claude session reads it and writes findings.json
@@ -26,9 +26,8 @@ input:
   pr: number
   # A DEFAULT, not `focus?: string`. An optional field is absent when the caller
   # omits it, and `{{run.focus}}` on an absent field is a render error that fails
-  # the run. `sequence validate` does not catch it: the field IS declared, so the
-  # token resolves statically and only blows up at dispatch. A default makes the
-  # field always present, and an empty string renders to nothing.
+  # the run. `sequence validate` refuses that shape for exactly this reason. A
+  # default makes the field always present, and an empty string renders to nothing.
   focus: {type: string, default: ''}
 
 steps:

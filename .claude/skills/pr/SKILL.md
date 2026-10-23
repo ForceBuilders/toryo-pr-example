@@ -63,7 +63,7 @@ and sitting in a wait loop is the one thing dispatch exists to avoid.
 `toryo sequence status <runId>` carries the error. The two common ones:
 
 - **`unknown step kind 'setup'`**: the installed toryo predates declarative
-  setup steps. Rebuild its binaries and restart the sequence daemon.
+  setup steps. Update it with `toryo update`.
 - **the `review` step failed its success check**: the worker did not write
   `findings.json`. The run directory
   (`~/.toryo/sequence/<projectId>/<runId>/`) has the session log.
